@@ -4,13 +4,17 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.text.DecimalFormat;
+
 public class MainActivity extends AppCompatActivity {
 
-    double input1 = 0, input2 = 0;
-    EditText edit;
+    double input1 = 0 , input2 = 0;
+    TextView edit;
+    TextView result, text;
     boolean Addition, Subtraction, Multiplication, Division, mRemainder, decimal;
     Button b0, b1, b2, b3, b4, b5, b6, b7, b8, b9, ba, bs, bm, bd, bequal, bdelete, bdot, Remainder;
 
@@ -19,25 +23,29 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        b0= (Button) findViewById (R.id.b0);
-        b1= (Button) findViewById (R.id.b1);
-        b2= (Button) findViewById (R.id.b2);
-        b3= (Button) findViewById (R.id.b3);
-        b4= (Button) findViewById (R.id.b4);
-        b5= (Button) findViewById (R.id.b5);
-        b6= (Button) findViewById (R.id.b6);
-        b7= (Button) findViewById (R.id.b7);
-        b8= (Button) findViewById (R.id.b8);
-        b9= (Button) findViewById (R.id.b9);
-        ba= (Button) findViewById (R.id.ba);
-        bs= (Button) findViewById (R.id.bs);
-        bm= (Button) findViewById (R.id.bm);
-        bd= (Button) findViewById (R.id.bd);
-        bequal= (Button) findViewById (R.id.bequal);
-        bdelete= (Button) findViewById (R.id.bdelete);
-        bdot= (Button) findViewById (R.id.bdot);
-        Remainder= (Button) findViewById (R.id.Remainder);
-        edit = (EditText) findViewById(R.id.edit);
+        b0=  findViewById (R.id.b0);
+        b1=  findViewById (R.id.b1);
+        b2=  findViewById (R.id.b2);
+        b3=  findViewById (R.id.b3);
+        b4=  findViewById (R.id.b4);
+        b5=  findViewById (R.id.b5);
+        b6=  findViewById (R.id.b6);
+        b7=  findViewById (R.id.b7);
+        b8=  findViewById (R.id.b8);
+        b9=  findViewById (R.id.b9);
+        ba=  findViewById (R.id.ba);
+        bs=  findViewById (R.id.bs);
+        bm=  findViewById (R.id.bm);
+        bd=  findViewById (R.id.bd);
+        bequal=  findViewById (R.id.bequal);
+        bdelete= findViewById (R.id.bdelete);
+        bdot=  findViewById (R.id.bdot);
+        Remainder=  findViewById (R.id.Remainder);
+        edit = findViewById(R.id.edit);
+        result = findViewById(R.id.result);
+        text = findViewById(R.id.text);
+
+        final DecimalFormat decimalFormat = new DecimalFormat("#.##########");
 
         b0.setOnClickListener(new View.OnClickListener()
         {
@@ -114,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (edit.getText().length() != 0) {
                     input1 = Float.parseFloat(edit.getText() + "");
+                    text.setText(decimalFormat.format(input1) + " +");
                     Addition = true;
                     decimal = false;
                     edit.setText(null);
@@ -125,6 +134,7 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     if (edit.getText().length() != 0){
                         input1 = Float.parseFloat(edit.getText() + "");
+                        text.setText(decimalFormat.format(input1) + "-");
                         Subtraction = true;
                         decimal = false;
                         edit.setText(null);
@@ -136,6 +146,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (edit.getText().length() != 0){
                     input1 = Float.parseFloat(edit.getText() + "");
+                    text.setText(decimalFormat.format(input1) + " *");
                     Multiplication= true;
                     decimal = false;
                     edit.setText(null);
@@ -147,6 +158,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (edit.getText().length() != 0){
                     input1 = Float.parseFloat(edit.getText() + "");
+                    text.setText(decimalFormat.format(input1) + " /");
                     Division = true;
                     decimal = false;
                     edit.setText(null);
@@ -158,6 +170,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (edit.getText().length() != 0){
                     input1 = Float.parseFloat(edit.getText() + "");
+                    text.setText(decimalFormat.format(input1) + " %");
                     mRemainder= true;
                     decimal = false;
                     edit.setText(null);
@@ -167,33 +180,32 @@ public class MainActivity extends AppCompatActivity {
         bequal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (Addition || Subtraction || Multiplication || Division || mRemainder) {
                     input2 = Float.parseFloat(edit.getText() + "");
                 }
 
                 if (Addition) {
-
-                    edit.setText(input1 + input2 + "");
+                    result.setText(input1 + input2 + "");
                     Addition = false;
                 }
 
                 if (Subtraction) {
-
-                    edit.setText(input1 - input2 + "");
+                    result.setText(input1 - input2 + "");
                     Subtraction = false;
                 }
 
                 if (Multiplication) {
-                    edit.setText(input1 * input2 + "");
+                    result.setText(input1 * input2 + "");
                     Multiplication = false;
                 }
 
                 if (Division) {
-                    edit.setText(input1 / input2 + "");
+                    result.setText(input1 / input2 + "");
                     Division = false;
                 }
                 if (mRemainder) {
-                    edit.setText(input1 % input2 + "");
+                    result.setText(input1 % input2 + "");
                     mRemainder = false;
                 }
             }
@@ -202,6 +214,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 edit.setText("");
+                result.setText("");
+                text.setText("");
                 input1 = 0.0;
                 input2 = 0.0;
             }
